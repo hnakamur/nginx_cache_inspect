@@ -84,7 +84,12 @@ func extractCacheBody(path, destdir string) error {
 		return fmt.Errorf("failed to skip http header: err=%+v", err)
 	}
 
-	outPath := filepath.Join(destdir, key)
+	var outPath string
+	if strings.HasSuffix(key, "/") {
+		outPath = filepath.Join(destdir, key+"__index.html")
+	} else {
+		outPath = filepath.Join(destdir, key)
+	}
 	//log.Printf("outPath=%s", outPath)
 	outDir := filepath.Dir(outPath)
 	err = os.MkdirAll(outDir, 0777)
