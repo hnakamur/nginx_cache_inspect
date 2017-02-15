@@ -62,10 +62,10 @@ func extractCacheBody(path, destdir string) error {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
-		fmt.Printf("pos=%d, line=%s\n", pos, line)
+		//fmt.Printf("pos=%d, line=%s\n", pos, line)
 		if strings.HasPrefix(line, keyMarker) {
 			key = line[len(keyMarker):]
-			fmt.Printf("key=%s!\n", key)
+			fmt.Printf("KEY: %s\n", key)
 		}
 		if pos > 0 && line == "" {
 			pos += len(line)
@@ -85,7 +85,7 @@ func extractCacheBody(path, destdir string) error {
 	}
 
 	outPath := filepath.Join(destdir, key)
-	log.Printf("outPath=%s", outPath)
+	//log.Printf("outPath=%s", outPath)
 	outDir := filepath.Dir(outPath)
 	err = os.MkdirAll(outDir, 0777)
 	if err != nil {
