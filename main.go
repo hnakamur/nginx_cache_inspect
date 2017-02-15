@@ -65,7 +65,7 @@ func extractCacheBody(path, destdir string) error {
 		//fmt.Printf("pos=%d, line=%s\n", pos, line)
 		if strings.HasPrefix(line, keyMarker) {
 			key = line[len(keyMarker):]
-			fmt.Printf("KEY: %s\n", key)
+			fmt.Printf("key: %s\n", key)
 		}
 		if pos > 0 && line == "" {
 			pos += len(line)
@@ -76,7 +76,7 @@ func extractCacheBody(path, destdir string) error {
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
-	fmt.Printf("pos: %d\n", pos)
+	// fmt.Printf("pos: %d\n", pos)
 
 	bodyStart := int64(headerSize + pos)
 	n, err = file.Seek(bodyStart, io.SeekStart)
@@ -103,5 +103,6 @@ func extractCacheBody(path, destdir string) error {
 		return fmt.Errorf("failed to copy request body to output file: file=%s, err=%+v", outPath, err)
 	}
 
+	fmt.Printf("written: %s\n", outPath)
 	return nil
 }
